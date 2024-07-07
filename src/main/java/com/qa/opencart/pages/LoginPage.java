@@ -23,6 +23,7 @@ public class LoginPage {
 	private By loginButton = By.xpath("//input[@value='Login']");
 	private By forgotPWdLink = By.linkText("Forgotten Password");
 	private By registerLink = By.linkText("Register");
+	private By priyam = By.linkText("Priyam");
 	// 2. Public Page Class Constructor
 
 	public LoginPage(WebDriver driver) {
