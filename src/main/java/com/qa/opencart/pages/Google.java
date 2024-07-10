@@ -9,6 +9,10 @@ public class Google {
 		System.out.println("done");
 
 	}
+
+	public void forgotpwd() {
+		System.out.println("forgotpwd");
+	}
 	
 	public void register() {
 		System.out.println("register");
