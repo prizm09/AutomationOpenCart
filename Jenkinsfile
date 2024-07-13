@@ -101,7 +101,7 @@ pipeline
         stage('Sanity Automation Test') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    git 'https://github.com/nprizm09/AutomationOpenCart.git'
+                    git 'https://github.com/prizm09/AutomationOpenCart.git'
                     bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=stage"
                     
                 }
