@@ -20,7 +20,7 @@
 		<extentreports-version>5.0.8</extentreports-version>
 		<aspectj.version>1.9.19</aspectj.version>
 
-		<selenium-version>4.19.0</selenium-version>
+		<selenium-version>4.20.0</selenium-version>
 
 	</properties>
 
