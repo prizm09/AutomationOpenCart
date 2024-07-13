@@ -79,19 +79,6 @@ pipeline
             }
         }
         
-        
-        stage('Publish Extent Report'){
-            steps{
-                     publishHTML([allowMissing: false,
-                                  alwaysLinkToLastBuild: false, 
-                                  keepAll: true, 
-                                  reportDir: 'reports', 
-                                  reportFiles: 'TestExecutionReport.html', 
-                                  reportName: 'HTML Regression Extent Report', 
-                                  reportTitles: ''])
-            }
-        }
-        
         stage("Deploy to Stage"){
             steps{
                 echo("deploy to Stage")
@@ -105,20 +92,6 @@ pipeline
                     bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=stage"
                     
                 }
-            }
-        }
-        
-        
-        
-        stage('Publish sanity Extent Report'){
-            steps{
-                     publishHTML([allowMissing: false,
-                                  alwaysLinkToLastBuild: false, 
-                                  keepAll: true, 
-                                  reportDir: 'reports', 
-                                  reportFiles: 'TestExecutionReport.html', 
-                                  reportName: 'HTML Sanity Extent Report', 
-                                  reportTitles: ''])
             }
         }
         
