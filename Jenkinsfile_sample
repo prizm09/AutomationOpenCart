@@ -3,54 +3,71 @@ pipeline{
     agent any
     
     stages{
-        stage("Build"){
+        
+        stage("build"){
             steps{
-                echo "Build the project"
+                echo("build the project")
             }
         }
         
-        stage("Deploy on QA"){
+        
+        stage("Run Security Scan"){
             steps{
-                echo "deploy on the QA env"
+                echo("security testing using burp suite")
             }
         }
         
-        stage("Unit Testing"){
+        stage("Run Unit test"){
             steps{
-                echo "run unit test"
+                echo("run UTs")
             }
         }
         
-        stage("Sanity Testing"){
+        stage("Run Integration test"){
             steps{
-                echo "run sanity test"
+                echo("run ITs")
             }
         }
         
-        stage("REgression Testing"){
+        stage("Deploy to dev"){
             steps{
-                echo "run regression test"
+                echo("deploy to dev")
             }
         }
         
-       stage("Deploy on stage"){
+        stage("Deploy to QA"){
             steps{
-                echo "deploy on the stage env"
+                echo("deploy to QA")
             }
         }
         
-        stage("Sanity Testing on Stage"){
+        stage("Run regression test cases on QA"){
             steps{
-                echo "run sanity test on stage"
+                echo("Run test cases on QA")
             }
         }
         
-        stage("Deploy on prod"){
+        stage("Deploy to stage"){
             steps{
-                echo "deploy on the prod env"
+                echo("deploy to stage")
             }
         }
+        
+         stage("Run sanity test cases on QA"){
+            steps{
+                echo("Run sanity test cases on QA")
+            }
+        }
+        
+        stage("Deploy to PROD"){
+            steps{
+                echo("deploy to PROD")
+            }
+        }
+        
+        
         
     }
+    
     
 }
