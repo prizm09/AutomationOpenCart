@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Open Cart Regression Suite" verbose="3"
+<suite name="Open Cart Sanity Suite" verbose="3"
 	thread-count="5" parallel="tests">
 	<listeners>
 		<listener class-name="com.qa.opencart.listeners.ExtentReportListener" />
