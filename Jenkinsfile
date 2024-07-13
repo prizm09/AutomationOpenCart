@@ -1,57 +1,73 @@
-pipeline
-{ 
-	agent any 
+pipeline 
+{
+    agent any
     
-    tools
+    tools{
+        maven 'maven'
+        }
+
+    stages 
     {
-    	maven 'maven'
-    }
-    	
-    stages
-    {     
-        stage ('Build') 
-        { 
-            steps
-            {
-                git 'https://github.com/jgclick/simple-maven-project-with-tests.git'
-                bat "mvn -Dmaven.test.failure.ignore=true clean package"
-            }
-            post
-            {
-            	success
-            	{
-            		junit '**/target/surefire-reports/TEST-*.xml'
-            		archiveArtifacts 'target/*.jar'
-            	}
-            }
-        }
-        
-        stage("Deploy to QA")
-        {
-        	steps
-        	{
-        		echo("deploy to qa")
-        	}
-        }
-        
-        stage('Regression Automation Test')
+        stage('Build') 
         {
             steps
             {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+            post 
+            {
+                success
                 {
-                	git 'https://github.com/prizm09/AutomationOpenCart.git'
-                    bat "mvn clean test -Dsurefile.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml"
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+        
+        
+        stage("Deploy to DEV"){
+            steps{
+                echo("deploy to DEV")
+            }
+        }
+        
+        
+                
+        stage('Sanity Automation Tests on DEV') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/naveenanimation20/Dec2023POMSeries.git'
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=dev"
+                    
+                }
+            }
+        }
+        
+        
+        
+        stage("Deploy to QA"){
+            steps{
+                echo("deploy to qa")
+            }
+        }
+        
+        
+                
+        stage('Regression Automation Tests') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/prizm09/AutomationOpenCart.git'
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml -Denv=qa"
+                    
                 }
             }
         }
                 
-        stage('Publish Allure Reports') 
-        {
-           steps 
-           {
-              script
-              {
+     
+        stage('Publish Allure Reports') {
+           steps {
+                script {
                     allure([
                         includeProperties: false,
                         jdk: '',
@@ -63,54 +79,49 @@ pipeline
             }
         }
         
-        stage('Publish Extent Report')
-        {
-            steps
-            {
-                 publishHTML([allowMissing: false,
-                             alwaysLinkToLastBuild: false, 
-                             keepAll: false, 
-                             reportDir: 'build', 
-                             reportFiles: 'TestExecutionReport.html', 
-                             reportName: 'HTML Regression Extent Report', 
-                             reportTitles: ''])
+        
+        stage('Publish Extent Report'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: true, 
+                                  reportDir: 'reports', 
+                                  reportFiles: 'TestExecutionReport.html', 
+                                  reportName: 'HTML Regression Extent Report', 
+                                  reportTitles: ''])
             }
         }
         
-        stage("Deploy to stage")
-        {
-        	steps
-        	{
-        		echo("deploy to stage")
-        	}
+        stage("Deploy to Stage"){
+            steps{
+                echo("deploy to Stage")
+            }
         }
         
-        stage('Sanity Automation Test')
-        {
-            steps 
-            {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') 
-                {
-                	git 'https://github.com/prizm09/AutomationOpenCart.git'
-                    bat "mvn clean test -Dsurefile.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml"
+        stage('Sanity Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/nprizm09/AutomationOpenCart.git'
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=stage"
+                    
                 }
             }
         }
         
-        stage('Publish Extent Report')
-        {
-            steps
-            {
+        
+        
+        stage('Publish sanity Extent Report'){
+            steps{
                      publishHTML([allowMissing: false,
                                   alwaysLinkToLastBuild: false, 
-                                  keepAll: false, 
-                                  reportDir: 'build', 
+                                  keepAll: true, 
+                                  reportDir: 'reports', 
                                   reportFiles: 'TestExecutionReport.html', 
                                   reportName: 'HTML Sanity Extent Report', 
                                   reportTitles: ''])
             }
         }
         
+        
     }
-
- }
+}
