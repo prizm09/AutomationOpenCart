@@ -14,13 +14,14 @@
 	<url>https://naveenautomationlabs.com/opencart/index.php?route=account/login</url>
 
 	<properties>
+		<allure-maven-artifactId>allure-maven</allure-maven-artifactId>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<extentreports-version>5.0.8</extentreports-version>
 		<aspectj.version>1.9.19</aspectj.version>
 
-		<selenium-version>4.20.0</selenium-version>
+		<selenium-version>4.19.0</selenium-version>
 
 	</properties>
 
@@ -30,6 +31,7 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${selenium-version}</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -43,30 +45,27 @@
 			<version>5.9</version>
 		</dependency>
 
+
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>3.9</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-scratchpad</artifactId>
 			<version>3.9</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>ooxml-schemas</artifactId>
@@ -78,6 +77,7 @@
 			<artifactId>openxml4j</artifactId>
 			<version>1.0-beta</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
-			<version>2.28.0</version>
+			<version>2.23.0</version>
 		</dependency>
 
 		<dependency>
@@ -103,26 +103,7 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.28</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-surefire-plugin</artifactId>
-			<version>3.0.0-M5</version>
-		</dependency>
-		
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>forplay-legacy</id>
-			<url>http://forplay.googlecode.com/svn/mavenrepo</url>
-		</repository>
-	</repositories>
 
 	<build>
 
@@ -138,25 +119,13 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
-
+				<version>3.2.5</version>
 				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<suiteXmlFiles>
@@ -168,7 +137,9 @@
 						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
 					</argLine>
 
+
 				</configuration>
+
 
 				<dependencies>
 					<dependency>
@@ -176,18 +147,23 @@
 						<artifactId>aspectjweaver</artifactId>
 						<version>${aspectj.version}</version>
 					</dependency>
-					<dependency>
-						<groupId>org.junit.platform</groupId>
-						<artifactId>junit-platform-surefire-provider</artifactId>
-						<version>1.0.3</version>
-					</dependency>
-					<dependency>
-						<groupId>org.junit.jupiter</groupId>
-						<artifactId>junit-jupiter-engine</artifactId>
-						<version>5.9.0</version>
-					</dependency>
 				</dependencies>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.2.5</version> <!-- or the latest version -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 
 	</build>
