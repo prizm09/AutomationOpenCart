@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -10,7 +9,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>OpenCartFramework</name>
-	<!-- FIXME change it to the project's website -->
 	<url>https://naveenautomationlabs.com/opencart/index.php?route=account/login</url>
 
 	<properties>
@@ -20,9 +18,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<extentreports-version>5.0.8</extentreports-version>
 		<aspectj.version>1.9.19</aspectj.version>
-
 		<selenium-version>4.19.0</selenium-version>
-
 	</properties>
 
 	<dependencies>
@@ -31,7 +27,6 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${selenium-version}</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -44,7 +39,6 @@
 			<artifactId>opencsv</artifactId>
 			<version>5.9</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -78,7 +72,6 @@
 			<version>1.0-beta</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
@@ -103,18 +96,25 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.34</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<compilerArgs>
+						<arg>--add-exports</arg>
+						<arg>jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 
@@ -128,32 +128,21 @@
 					</includes>
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
+					<!-- Comment or remove suiteXmlFiles if not using -->
 					<suiteXmlFiles>
-						<!--<suiteXmlFile>src/test/resources/testrunners/testng_regression.xml</suiteXmlFile>-->
-						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+						<suiteXmlFile>src/test/resource/testrunners/testng_regression.xml</suiteXmlFile>
 					</suiteXmlFiles>
-
 					<argLine>
 						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
 					</argLine>
-
-
+					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
-
-
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjweaver</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.2.5</version> <!-- or the latest version -->
+				<version>3.2.5</version>
 				<executions>
 					<execution>
 						<goals>
@@ -163,8 +152,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
-
 	</build>
 </project>
