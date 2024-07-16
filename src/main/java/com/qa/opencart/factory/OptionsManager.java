@@ -1,7 +1,10 @@
 package com.qa.opencart.factory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -22,43 +25,73 @@ public class OptionsManager {
 	
 	public ChromeOptions getChromeOptions() {
 		co = new ChromeOptions();
-		if(Boolean.parseBoolean(prop.getProperty("headless").trim())) { //Boolean wrapper class is use to conver string to boolean
-			//System.out.println("Running chrome in headless mode");
+
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			co.setCapability("browserName", "chrome");
+			/*
+			 * co.setBrowserVersion(prop.getProperty("browserversion").trim()); Map<String,
+			 * Object> selenoidOptions = new HashMap<>();
+			 * selenoidOptions.put("screenResolution", "1280x1024x24");
+			 * selenoidOptions.put("enableVNC", true); selenoidOptions.put("name",
+			 * prop.getProperty("testname")); co.setCapability("selenoid:options",
+			 * selenoidOptions);
+			 */
+		}
+
+		if (Boolean.parseBoolean(prop.getProperty("headless").trim())) {
+			// System.out.println("Running chrome in headless mode");
 			Log.info("Running chrome in headless mode");
 			co.addArguments("--headless");
 		}
-		if(Boolean.parseBoolean(prop.getProperty("incognito").trim())) { 
+		if (Boolean.parseBoolean(prop.getProperty("incognito").trim())) {
 			Log.info("Running chrome in incognito mode");
 			co.addArguments("--incognito");
 		}
-		
+
 		return co;
 	}
-	
-	public FirefoxOptions getFirefoxOptions() {
-		fo = new FirefoxOptions();
-		if(Boolean.parseBoolean(prop.getProperty("headless").trim())) {
-			System.out.println("Running firefox in headless mode");
-			fo.addArguments("--headless");
-		}
-		if(Boolean.parseBoolean(prop.getProperty("incognito").trim())) { 
-			fo.addArguments("--incognito");
-		}
-		
-		return fo;
-	}
-	
+
 	public EdgeOptions getEdgeOptions() {
 		eo = new EdgeOptions();
-		if(Boolean.parseBoolean(prop.getProperty("headless").trim())) {
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			eo.setCapability("browserName", "edge");
+			//eo.setCapability("platform", Platform.LINUX);
+		}
+		if (Boolean.parseBoolean(prop.getProperty("headless").trim())) {
 			System.out.println("Running edge in headless mode");
 			eo.addArguments("--headless");
 		}
-		if(Boolean.parseBoolean(prop.getProperty("incognito").trim())) { 
+		if (Boolean.parseBoolean(prop.getProperty("incognito").trim())) {
 			eo.addArguments("--inprivate");
 		}
-		
+
 		return eo;
+	}
+
+	public FirefoxOptions getFirefoxOptions() {
+		fo = new FirefoxOptions();
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			fo.setCapability("browserName", "firefox");
+			/*
+			 * fo.setBrowserVersion(prop.getProperty("browserversion").trim());
+			 * 
+			 * Map<String, Object> selenoidOptions = new HashMap<>();
+			 * selenoidOptions.put("screenResolution", "1280x1024x24");
+			 * selenoidOptions.put("enableVNC", true); selenoidOptions.put("name",
+			 * prop.getProperty("testname")); fo.setCapability("selenoid:options",
+			 * selenoidOptions);
+			 */
+
+		}
+		if (Boolean.parseBoolean(prop.getProperty("headless").trim())) {
+			System.out.println("Running firefox in headless mode");
+			fo.addArguments("--headless");
+		}
+		if (Boolean.parseBoolean(prop.getProperty("incognito").trim())) {
+			fo.addArguments("--incognito");
+		}
+
+		return fo;
 	}
 	
 	
