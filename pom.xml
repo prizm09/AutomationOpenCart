@@ -130,7 +130,7 @@
 					<reuseForks>true</reuseForks>
 					<!-- Comment or remove suiteXmlFiles if not using -->
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/testrunners/testng_regression.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resource/testrunners/testng_regression.xml</suiteXmlFile>
 						<!--<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>-->
 					</suiteXmlFiles>
 					<argLine>
