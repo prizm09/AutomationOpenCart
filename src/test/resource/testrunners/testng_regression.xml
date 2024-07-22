@@ -8,6 +8,8 @@
     
     <test name="Login Page Test chrome">
         <parameter name="browser" value="chrome" />
+        <parameter name="browserversion" value="124.0" />
+        <parameter name="testname" value="OpenCart-Login Page Test" />
         <classes>
             <class name="com.qa.opencart.tests.LoginPageTest" />
         </classes>
@@ -29,8 +31,19 @@
     </test>
     -->
     
-    <test name="Accounts Page Test">
+    <!-- <test name="Accounts Page Test">
         <parameter name="browser" value="chrome" />
+        <parameter name="browserversion" value="113.0" />
+        <parameter name="testname" value="OpenCart-Account Page Test" />
+        <classes>
+            <class name="com.qa.opencart.tests.AccountsPageTest" />
+        </classes>
+    </test> -->
+    
+    <test name="Accounts Page Test_Firefox_124">
+        <parameter name="browser" value="firefox" />
+        <parameter name="browserversion" value="124.0" />
+        <parameter name="testname" value="OpenCart-Accounts Page Test" />
         <classes>
             <class name="com.qa.opencart.tests.AccountsPageTest" />
         </classes>
@@ -40,6 +53,8 @@
     
     <test name="ProductInfo Page Test">
         <parameter name="browser" value="chrome" />
+        <parameter name="browserversion" value="123.0" />
+        <parameter name="testname" value="OpenCart-ProductInfo Page Test" />
         <classes>
             <class name="com.qa.opencart.tests.ProductPageInfoTest" />
         </classes>

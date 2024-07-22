@@ -32,8 +32,8 @@ public class ProductPageInfoTest extends BaseTest{
 	
 	@Test(dataProvider = "getProductSearchData")
 	public void productHeaderTest(String searchKey, String productName) {
-		searchResultPage = accPage.doSearch(searchKey);
-		productInfoPage = searchResultPage.selectProduct(productName);
+		searchResultsPage = accPage.doSearch(searchKey);
+		productInfoPage = searchResultsPage.selectProduct(productName);
 		Assert.assertEquals(productInfoPage.getProductHeader(), productName);
 	}
 	
@@ -55,15 +55,15 @@ public class ProductPageInfoTest extends BaseTest{
 	
 	@Test(dataProvider = "getProductImagesDataFromExcel")
 	public void productImagesCountTest(String searchKey, String productName, String imagesCount) {
-		searchResultPage = accPage.doSearch(searchKey);
-		productInfoPage = searchResultPage.selectProduct(productName);
+		searchResultsPage = accPage.doSearch(searchKey);
+		productInfoPage = searchResultsPage.selectProduct(productName);
 		Assert.assertEquals(productInfoPage.getProductImagesCount(), Integer.parseInt(imagesCount));
 	}
 	
 	@Test
 	public void productInfoTest() {
-		searchResultPage = accPage.doSearch("macbook");
-		productInfoPage = searchResultPage.selectProduct("MacBook Pro");
+		searchResultsPage = accPage.doSearch("macbook");
+		productInfoPage = searchResultsPage.selectProduct("MacBook Pro");
 		Map<String, String> productActDetailsMap = productInfoPage.getProductDetailsMap();
 		softAssert.assertEquals(productActDetailsMap.get("Brand"), "Apple");
 		softAssert.assertEquals(productActDetailsMap.get("Product Code"), "Product 18");

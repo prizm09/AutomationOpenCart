@@ -23,26 +23,35 @@ public class BaseTest {
 	protected Properties prop;
 	DriverFactory df;
 	
-	//The reason to make this protected is that, the inherit class can access the login page reference and access their methods.
-	protected LoginPage loginPage; 
+	protected LoginPage loginPage;
 	protected AccountsPage accPage;
-	protected SearchResultsPage searchResultPage;
-	protected RegistrationPage registrationPage;
+	protected SearchResultsPage searchResultsPage;
 	protected ProductInfoPage productInfoPage;
+	protected RegistrationPage registrationPage;
 	protected SoftAssert softAssert;
 	
 	@Step("Setup: launching {0} browser & init the properties")
-	@Parameters({"browser"})
+	@Parameters({"browser", "browserversion", "testname"})
 	@BeforeTest
-	public void setup(String browserName) {
+	public void setup(String browserName, String browserVersion, String testName) {
 		df = new DriverFactory();
 		prop = df.initProp();
-		driver = df.initDriver(prop);	// call by reference
+		
+		
+			if(browserName!=null) {
+				prop.setProperty("browser", browserName);
+				prop.setProperty("browserversion", browserVersion);
+				prop.setProperty("testname", testName);
+
+			}
+		
+		
+		driver = df.initDriver(prop);
 		loginPage = new LoginPage(driver);
 		softAssert = new SoftAssert();
 	}
 	
-	@Step("Closing the browser")
+	@Step("Closing browser")
 	@AfterTest
 	public void tearDown() {
 		driver.quit();

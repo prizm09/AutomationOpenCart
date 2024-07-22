@@ -27,13 +27,13 @@ public class SearchResultsTest extends BaseTest {
 
 	@Test(dataProvider = "getProductCountData")
 	public void searchResultsCountTest(String searchKey, int productCount) {
-		searchResultPage = accPage.doSearch(searchKey);
-		Assert.assertEquals(searchResultPage.getSearchProductCount(), productCount);
+		searchResultsPage = accPage.doSearch(searchKey);
+		Assert.assertEquals(searchResultsPage.getSearchProductCount(), productCount);
 	}
 	
 	@Test
 	public void searchResultsTest() {
-		Assert.assertEquals(searchResultPage.getSearchProductCount(), 3);
+		Assert.assertEquals(searchResultsPage.getSearchProductCount(), 3);
 	}
 
 }
